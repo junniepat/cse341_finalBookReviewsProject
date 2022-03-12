@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "title": "Book Reviews API ",
-    "description": "BookReview API",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "description": "BookReview API"
   },
   "host": "localhost:8080",
   "basePath": "/",
@@ -12,11 +12,19 @@
   ],
   "paths": {
     "/auth/login/": {
-      "get": {
+      "post": {
         "description": "",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     }
+  },
+  "license": {
+    "name": "Apache 2.0",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
   }
 }
