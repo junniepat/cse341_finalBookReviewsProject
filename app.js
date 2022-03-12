@@ -1,13 +1,23 @@
 // installed express, nodemon, body parser, 
 const express = require("express");
+const swaggerUi = require('swagger-ui-express');
 const bodyParser = require('body-parser');
 
+const swaggerDocument = require('./swagger.json');
 const reviewsRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
 
 const app = express();
 
 app.use(bodyParser.json());
+
+// swagger docs
+var options = {
+    explorer: true,
+    customCss: '.swagger-ui .topbar { display: none }'
+  };
+  
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
 // prevents CORS error
 app.use((req, res, next) => {
