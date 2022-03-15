@@ -4,5 +4,6 @@ const reviews = require('./reviews');
 
 routes.use('/auth/login', auth);
 routes.use('/reviews', reviews);
+routes.use('/post')
 
 module.exports = routes;
