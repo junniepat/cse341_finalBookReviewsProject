@@ -6,20 +6,20 @@ const { validationResult } = require('express-validator/check');
 const review = require('../models/review');
 
 exports.createReview = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed, entered data is incorrect.');
-    error.statusCode = 422;
-    throw error;
-  }
-  const imageUrl = req.body.imageUrl;
+
+  const userName = req.body.userName;
   const title = req.body.title;
   const content = req.body.content;
+  const author = req.body.author;
+  const rating = req.body.rating
+  const reviewSummary = req.body.reviewSummary
   const review = new Review({
+    userName: userName,
     title: title,
     content: content,
-    imageUrl: imageUrl,
-    creator: { name: "temp" }
+    author: author,
+    rating: rating,
+    reviewSummary: reviewSummary
   });
   review
     .save()
@@ -42,21 +42,17 @@ exports.updateReview = (req, res, next) => {
   const reviewId = req.params.reviewId;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const error = new Error('Validation failed, entered data is incorrect.');
+    const error = new Error('data entry was incorrect');
     error.statusCode = 422;
     throw error;
   }
+  
   const title = req.body.title;
   const content = req.body.content;
-  let imageUrl = req.body.image;
-  if (req.file) {
-    imageUrl = req.file.path;
-  }
-  if (!imageUrl) {
-    const error = new Error('No file picked.');
-    error.statusCode = 422;
-    throw error;
-  }
+  const author = req.body.author;
+  const rating = req.body.rating
+  const reviewSummary = req.body.reviewSummary  
+  
   review.findById(reviewId)
     .then(review => {
       if (!review) {
@@ -68,37 +64,15 @@ exports.updateReview = (req, res, next) => {
         clearImage(review.imageUrl);
       }
       review.title = title;
-      review.imageUrl = imageUrl;
       review.content = content;
+      review.author = author;
+      review.rating = rating
+      review.reviewSummary = reviewSummary  
+      
       return review.save();
     })
     .then(result => {
       res.status(200).json({ message: 'review updated!', review: result });
-    })
-    .catch(err => {
-      if (!err.statusCode) {
-        err.statusCode = 500;
-      }
-      next(err);
-    });
-};
-
-exports.deletereview = (req, res, next) => {
-  const reviewId = req.params.reviewId;
-  review.findById(reviewId)
-    .then(review => {
-      if (!review) {
-        const error = new Error('Could not find review.');
-        error.statusCode = 404;
-        throw error;
-      }
-      // Check logged in user
-      clearImage(review.imageUrl);
-      return review.findByIdAndRemove(reviewId);
-    })
-    .then(result => {
-      console.log(result);
-      res.status(200).json({ message: 'Deleted review.' });
     })
     .catch(err => {
       if (!err.statusCode) {
