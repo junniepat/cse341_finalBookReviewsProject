@@ -2,12 +2,20 @@
 const express = require("express");
 const swaggerUi = require('swagger-ui-express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
 
 const swaggerDocument = require('./swagger.json');
 const reviewsRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
+const reviewModel = require('./models/review');
 
 const app = express();
+
+//stores mongodb connection for later use
+const MONGODB_URI =
+ // replace with your token;
+
 
 app.use(bodyParser.json());
 
@@ -40,5 +48,36 @@ app.use((error, req, res, next) => {
 }); */
 
 
+/* test for database
+let first_review = new reviewer({
+    userName: 'test',
+    title: 'first book',
+    author: 'tester test',
+    rating: 5,
+    reviewSummary: "This is a test",
+});
+
+first_review.save().then(result => {
+    console.log("logged");
+})
+.catch(err => {
+    console.log(err);
+});
+*/
+
 // you can change which port if desired
-app.listen(8080);
+/*
+creates the connection to the mongodb database using mongoose
+
+connect to database
+        if successful connect
+        else log an error
+*/
+
+mongoose.connect(MONGODB_URI)
+.then(result => {
+    app.listen(8080);
+})
+.catch(err => {
+    console.log(err);
+})
