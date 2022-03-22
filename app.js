@@ -14,7 +14,9 @@ const app = express();
 
 //stores mongodb connection for later use
 const MONGODB_URI =
-  'mongodb+srv://hbowlby1:0oPd459Op7ewOxAm@udemycourse.mz8gq.mongodb.net/reviews?retryWrites=true&w=majority';
+
+ // replace with your token;
+
 
 
 app.use(bodyParser.json());
