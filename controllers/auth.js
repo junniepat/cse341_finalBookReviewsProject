@@ -24,6 +24,7 @@ exports.signup = (req, res, next) => {
     .then(hashedPw => {
       const user = new User({
         email: email,
+        userName: userName,
         firstName: firstName,
         lastName: lastName,
         password: hashedPw,
@@ -66,7 +67,7 @@ exports.login = (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString()
         },
-        'tempsectoken',
+        'bob',
         { expiresIn: '1h' }
       );
       res.status(200).json({ token: token, userId: loadedUser._id.toString() });
