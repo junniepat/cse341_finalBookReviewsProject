@@ -24,6 +24,7 @@ exports.signup = (req, res, next) => {
     .then(hashedPw => {
       const user = new User({
         email: email,
+        userName: userName,
         firstName: firstName,
         lastName: lastName,
         password: hashedPw,
