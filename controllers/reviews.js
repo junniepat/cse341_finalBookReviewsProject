@@ -4,7 +4,7 @@ const path = require('path');
 
 const { validationResult } = require('express-validator');
 
-const review = require('../models/review');
+const Review = require('../models/review');
 
 exports.createReview = (req, res, next) => {
 
@@ -45,8 +45,8 @@ exports.updateReview = (req, res, next) => {
   const content = req.body.content;
   const author = req.body.author;
   const rating = req.body.rating
-  const reviewSummary = req.body.reviewSummary  
-  
+  const reviewSummary = req.body.reviewSummary
+
   review.findById(reviewId)
     .then(review => {
       if (!review) {
@@ -54,15 +54,12 @@ exports.updateReview = (req, res, next) => {
         error.statusCode = 404;
         throw error;
       }
-      if (imageUrl !== review.imageUrl) {
-        clearImage(review.imageUrl);
-      }
       review.title = title;
       review.content = content;
       review.author = author;
-      review.rating = rating
-      review.reviewSummary = reviewSummary  
-      
+      review.rating = rating;
+      review.reviewSummary = reviewSummary;
+
       return review.save();
     })
     .then(result => {
@@ -75,9 +72,6 @@ exports.updateReview = (req, res, next) => {
       next(err);
     });
 };
-
-
-const Review = require('../models/review');
 
 //Get all reviews
 async function getReviews(req, res, next) {
@@ -191,4 +185,3 @@ module.exports = {getReviews, getReview, deleteReview}
 //       next(err);
 //     });
 // };
-
