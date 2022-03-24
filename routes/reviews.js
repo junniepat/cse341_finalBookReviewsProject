@@ -10,5 +10,4 @@ router.get('/reviews', reviewsController.getReviews);
 router.get('/review/:id', reviewsController.getReview);
 router.delete('/review/:id', reviewsController.deleteReview);
 
-
-
+module.exports = router;
