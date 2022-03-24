@@ -6,7 +6,7 @@ const { validationResult } = require('express-validator');
 
 const Review = require('../models/review');
 
-exports.createReview = (req, res, next) => {
+function createReview(req, res, next) {
 
   const username = req.body.username;
   const title = req.body.title;
@@ -39,7 +39,7 @@ exports.createReview = (req, res, next) => {
 };
 
 
-exports.updateReview = (req, res, next) => {
+function updateReview(req, res, next) {
   const reviewId = req.params.reviewId;
   const title = req.body.title;
   const content = req.body.content;
@@ -108,7 +108,7 @@ async function deleteReview(req, res, next) {
   }
 };
 
-module.exports = {getReviews, getReview, deleteReview}
+module.exports = {createReview, updateReview, getReviews, getReview, deleteReview}
 
 //Create review
 // async function createReview(req, res, next) {
