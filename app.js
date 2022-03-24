@@ -81,3 +81,6 @@ mongoose.connect(MONGODB_URI)
 .catch(err => {
     console.log(err);
 })
+
+// for testing
+module.exports = app;
