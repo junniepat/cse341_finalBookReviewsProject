@@ -8,14 +8,14 @@ const Review = require('../models/review');
 
 exports.createReview = (req, res, next) => {
 
-  const userName = req.body.userName;
+  const username = req.body.username;
   const title = req.body.title;
   const content = req.body.content;
   const author = req.body.author;
   const rating = req.body.rating
   const reviewSummary = req.body.reviewSummary
   const review = new Review({
-    userName: userName,
+    username: username,
     title: title,
     content: content,
     author: author,
@@ -113,7 +113,7 @@ module.exports = {getReviews, getReview, deleteReview}
 //Create review
 // async function createReview(req, res, next) {
 //   const review = new Review({
-//     userName: 'Darcee',
+//     username: 'Darcee',
 //     title: 'Treasure Island',
 //     author: 'Robert Louis Stevenson',
 //     rating: 1,

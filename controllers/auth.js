@@ -15,7 +15,7 @@ exports.signup = (req, res, next) => {
     throw error;
   }
   const email = req.body.email;
-  const userName = req.body.userName;
+  const username = req.body.username;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const password = req.body.password;
@@ -23,6 +23,7 @@ exports.signup = (req, res, next) => {
     .hash(password, 12)
     .then(hashedPw => {
       const user = new User({
+        username: username,
         email: email,
         firstName: firstName,
         lastName: lastName,

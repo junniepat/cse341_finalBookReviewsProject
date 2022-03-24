@@ -50,7 +50,7 @@ app.use((error, req, res, next) => {
 
 /* test for database
 let first_review = new reviewer({
-    userName: 'test',
+    username: 'test',
     title: 'first book',
     author: 'tester test',
     rating: 5,
