@@ -8,7 +8,7 @@ let reviewDate = new Date();
 //creates the schema for the database
 
 const reviewSchema = new Schema({
-    userName:
+    username:
     {
         type: String,
         required: true,
@@ -38,9 +38,9 @@ const reviewSchema = new Schema({
     {
         type: Date,
         //gets the date and displays it like xxxx-xx-xx
-        default: 
+        default:
         reviewDate.getFullYear() + '-' + (reviewDate.getMonth()+1) + '-' + reviewDate.getDate()
     }
 });
 
-module.exports = mongoose.model('Review', reviewSchema);
+module.exports = mongoose.models.Review || mongoose.model('Review', reviewSchema);

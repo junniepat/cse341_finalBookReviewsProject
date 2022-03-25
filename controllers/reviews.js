@@ -2,20 +2,20 @@
 const fs = require('fs');
 const path = require('path');
 
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 
-const review = require('../models/review');
+const Review = require('../models/review');
 
-exports.createReview = (req, res, next) => {
+function createReview(req, res, next) {
 
-  const userName = req.body.userName;
+  const username = req.body.username;
   const title = req.body.title;
   const content = req.body.content;
   const author = req.body.author;
   const rating = req.body.rating
   const reviewSummary = req.body.reviewSummary
   const review = new Review({
-    userName: userName,
+    username: username,
     title: title,
     content: content,
     author: author,
@@ -39,14 +39,14 @@ exports.createReview = (req, res, next) => {
 };
 
 
-exports.updateReview = (req, res, next) => {
+function updateReview(req, res, next) {
   const reviewId = req.params.reviewId;
   const title = req.body.title;
   const content = req.body.content;
   const author = req.body.author;
   const rating = req.body.rating
-  const reviewSummary = req.body.reviewSummary  
-  
+  const reviewSummary = req.body.reviewSummary
+
   review.findById(reviewId)
     .then(review => {
       if (!review) {
@@ -54,15 +54,12 @@ exports.updateReview = (req, res, next) => {
         error.statusCode = 404;
         throw error;
       }
-      if (imageUrl !== review.imageUrl) {
-        clearImage(review.imageUrl);
-      }
       review.title = title;
       review.content = content;
       review.author = author;
-      review.rating = rating
-      review.reviewSummary = reviewSummary  
-      
+      review.rating = rating;
+      review.reviewSummary = reviewSummary;
+
       return review.save();
     })
     .then(result => {
@@ -75,9 +72,6 @@ exports.updateReview = (req, res, next) => {
       next(err);
     });
 };
-
-
-const Review = require('../models/review');
 
 //Get all reviews
 async function getReviews(req, res, next) {
@@ -114,12 +108,12 @@ async function deleteReview(req, res, next) {
   }
 };
 
-module.exports = {getReviews, getReview, deleteReview}
+module.exports = {createReview, updateReview, getReviews, getReview, deleteReview}
 
 //Create review
 // async function createReview(req, res, next) {
 //   const review = new Review({
-//     userName: 'Darcee',
+//     username: 'Darcee',
 //     title: 'Treasure Island',
 //     author: 'Robert Louis Stevenson',
 //     rating: 1,
@@ -191,4 +185,3 @@ module.exports = {getReviews, getReview, deleteReview}
 //       next(err);
 //     });
 // };
-

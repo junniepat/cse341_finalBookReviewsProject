@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -15,7 +15,7 @@ exports.signup = (req, res, next) => {
     throw error;
   }
   const email = req.body.email;
-  const userName = req.body.userName;
+  const username = req.body.username;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const password = req.body.password;
@@ -23,6 +23,7 @@ exports.signup = (req, res, next) => {
     .hash(password, 12)
     .then(hashedPw => {
       const user = new User({
+        username: username,
         email: email,
         userName: userName,
         firstName: firstName,
@@ -67,7 +68,7 @@ exports.login = (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString()
         },
-        'tempsectoken',
+        process.env.SECRET,
         { expiresIn: '1h' }
       );
       res.status(200).json({ token: token, userId: loadedUser._id.toString() });

@@ -1,4 +1,4 @@
-// installed express, nodemon, body parser, 
+// installed express, nodemon, body parser,
 const express = require("express");
 const swaggerUi = require('swagger-ui-express');
 const bodyParser = require('body-parser');
@@ -13,11 +13,9 @@ const reviewModel = require('./models/review');
 const app = express();
 
 //stores mongodb connection for later use
-const MONGODB_URI =
+const MONGODB_URI = process.env.MONGODB_URL;
 
  // replace with your token;
-
-
 
 app.use(bodyParser.json());
 
@@ -26,7 +24,7 @@ var options = {
     explorer: true,
     customCss: '.swagger-ui .topbar { display: none }'
   };
-  
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
 // prevents CORS error
@@ -52,7 +50,7 @@ app.use((error, req, res, next) => {
 
 /* test for database
 let first_review = new reviewer({
-    userName: 'test',
+    username: 'test',
     title: 'first book',
     author: 'tester test',
     rating: 5,
@@ -83,3 +81,6 @@ mongoose.connect(MONGODB_URI)
 .catch(err => {
     console.log(err);
 })
+
+// for testing
+module.exports = app;
