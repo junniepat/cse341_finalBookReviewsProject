@@ -6,18 +6,19 @@ const { validationResult } = require('express-validator');
 
 const Review = require('../models/review');
 
-function createReview(req, res, next) {
-
-  const username = req.body.username;
+async function createReview(req, res, next){
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(404).json({message: 'input is not valid'});
+  }
+  const userName = req.body.userName;
   const title = req.body.title;
-  const content = req.body.content;
   const author = req.body.author;
   const rating = req.body.rating
   const reviewSummary = req.body.reviewSummary
   const review = new Review({
-    username: username,
+    userName: userName,
     title: title,
-    content: content,
     author: author,
     rating: rating,
     reviewSummary: reviewSummary
@@ -39,39 +40,34 @@ function createReview(req, res, next) {
 };
 
 
-function updateReview(req, res, next) {
+async function updateReview(req, res, next){
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(404).json({message: 'input is not valid'});
+  }
   const reviewId = req.params.reviewId;
   const title = req.body.title;
-  const content = req.body.content;
   const author = req.body.author;
   const rating = req.body.rating
   const reviewSummary = req.body.reviewSummary
 
-  review.findById(reviewId)
-    .then(review => {
+
+  const review = await Review.findById(reviewId);
+    
       if (!review) {
-        const error = new Error('Could not find review.');
-        error.statusCode = 404;
-        throw error;
-      }
+        return res.status(404).json({message: 'could not find review.'});
+
+      }else{
       review.title = title;
-      review.content = content;
       review.author = author;
       review.rating = rating;
       review.reviewSummary = reviewSummary;
-
-      return review.save();
-    })
-    .then(result => {
-      res.status(200).json({ message: 'review updated!', review: result });
-    })
-    .catch(err => {
-      if (!err.statusCode) {
-        err.statusCode = 500;
+      
+      review.save();
       }
-      next(err);
-    });
-};
+      return res.status(200).json({message: 'review updated.', reviews: review});
+
+    };
 
 //Get all reviews
 async function getReviews(req, res, next) {
@@ -108,12 +104,14 @@ async function deleteReview(req, res, next) {
   }
 };
 
-module.exports = {createReview, updateReview, getReviews, getReview, deleteReview}
+
+
+module.exports = {getReviews, getReview, deleteReview, updateReview, createReview}
 
 //Create review
 // async function createReview(req, res, next) {
 //   const review = new Review({
-//     username: 'Darcee',
+//     userName: 'Darcee',
 //     title: 'Treasure Island',
 //     author: 'Robert Louis Stevenson',
 //     rating: 1,
