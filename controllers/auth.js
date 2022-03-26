@@ -78,6 +78,10 @@ exports.login = (req, res, next) => {
 };
 
 exports.updatePassword = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(404).json({message: errors});
+  }
   const email = req.body.email;
   const updatedPassword = req.body.updatedPassword;
   bcrypt

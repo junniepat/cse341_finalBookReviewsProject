@@ -18,6 +18,13 @@ router.post('/signup',
   ],
    authController.signup)
 
-   router.post('/updatepassword', authController.updatePassword);
+   router.post('/updatepassword', [
+    body('email').isEmail()
+    ,
+    body('updatedPassword')
+      .trim()
+      .isLength({ min: 8 })
+      .withMessage("Invalid password")
+  ], authController.updatePassword);
 
 module.exports = router;
