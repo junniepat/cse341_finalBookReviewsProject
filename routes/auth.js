@@ -18,4 +18,6 @@ router.post('/signup',
   ],
    authController.signup)
 
+   router.post('/updatepassword', authController.updatePassword);
+
 module.exports = router;
