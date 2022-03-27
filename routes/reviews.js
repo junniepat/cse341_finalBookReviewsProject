@@ -1,11 +1,13 @@
 const express = require('express');
 const reviewsController = require('../controllers/reviews');
+const {protected} = require('../middleware');
 const { body } = require('express-validator');
 
 const router = express.Router();
 
 
 router.post('/post',
+    protected,
     [
     body('rating')
       .isNumeric()
@@ -17,7 +19,9 @@ router.post('/post',
 reviewsController.createReview);
 
 
-router.put('/post/:reviewId',[
+router.put('/post/:reviewId',
+    protected,
+    [
     body('rating')
       .isNumeric()
       .isInt({min: 0, max:5}),
@@ -28,6 +32,6 @@ router.put('/post/:reviewId',[
 
 router.get('/reviews', reviewsController.getReviews);
 router.get('/review/:id', reviewsController.getReview);
-router.delete('/review/:id', reviewsController.deleteReview);
+router.delete('/review/:id', protected, reviewsController.deleteReview);
 
 module.exports = router;
