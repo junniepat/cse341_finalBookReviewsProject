@@ -1,7 +1,9 @@
 const express = require('express');
 const authController = require('../controllers/auth');
-const router = express.Router();
+const {protected} = require('../middleware');
 const { body } = require('express-validator');
+
+const router = express.Router();
 
 
 router.post('/login', authController.login)
@@ -18,9 +20,9 @@ router.post('/signup',
   ],
    authController.signup)
 
-   router.post('/updatepassword', [
-    body('email').isEmail()
-    ,
+   router.post('/updatepassword',
+    protected,
+    [
     body('updatedPassword')
       .trim()
       .isLength({ min: 8 })
