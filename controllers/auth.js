@@ -82,11 +82,14 @@ exports.updatePassword = (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(404).json({message: errors});
   }
+  let loggedInUserEmail = req.user.email;
   const email = req.body.email;
   const updatedPassword = req.body.updatedPassword;
   bcrypt
     .hash(updatedPassword, 12)
     .then(hashedPw => { 
+
+      if (loggedInUserEmail === email) {
       User.findOne({ email: email })
         .then(user => {
         if (!user) {
@@ -99,7 +102,9 @@ exports.updatePassword = (req, res, next) => {
     })
     .then(result => {
       res.status(200).json({ message: 'Password updated!' });
-    }) })
+    }) } else 
+      {return res.status(404).json({ message: 'Could not update password.'});
+        }})
     
     .catch(err => {
       if (!err.statusCode) {
