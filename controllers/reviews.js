@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const { validationResult } = require('express-validator/check');
+//const { validationResult } = require('express-validator/check');
 
 const review = require('../models/review');
 
@@ -77,7 +77,6 @@ exports.updateReview = (req, res, next) => {
 };
 
 
-const Review = require('../models/review');
 
 //Get all reviews
 async function getReviews(req, res, next) {
