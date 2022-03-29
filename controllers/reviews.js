@@ -92,9 +92,11 @@ async function getReview(req, res, next) {
 //Delete a single review
 async function deleteReview(req, res, next) {
   const reviewId = req.params.id;
+  let loggedInUserID = req.user.userId;
+  // console.log('loggedInUser', loggedInUserID);
   try {
     const review = await Review.findByIdAndDelete(reviewId);
-    if (!review) {
+    if (!review && review.userId === loggedInUserID) {
       return res.status(404).json({ message: 'Could not find and delete review.'});
     }
     return res.status(200).json({ message: 'Deleted review', review: review});
@@ -103,7 +105,6 @@ async function deleteReview(req, res, next) {
     res.status(500).json({ message: 'Could not delete review.'});
   }
 };
-
 
 
 module.exports = {getReviews, getReview, deleteReview, updateReview, createReview}
