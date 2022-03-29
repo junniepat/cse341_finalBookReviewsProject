@@ -11,6 +11,15 @@ const doc = {
         url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
     },
     host: 'localhost:8080',
+    securityDefinitions: {
+        bearerAuth: {
+            type: 'apiKey',
+            name: 'Authorization',
+            scheme: 'bearer',
+            in: 'header'
+        }
+    },
+    security: [ { bearerAuth: [] } ],
     schemes: ['http']
 };
 

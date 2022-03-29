@@ -11,16 +11,20 @@ async function createReview(req, res, next){
   if (!errors.isEmpty()) {
     return res.status(404).json({message: 'input is not valid'});
   }
-  const userName = req.body.userName;
+  const username = req.body.username;
   const title = req.body.title;
   const author = req.body.author;
   const rating = req.body.rating
   const reviewSummary = req.body.reviewSummary
+  const userId = req.body.userId;
+
+
   const review = new Review({
-    userName: userName,
+    username: username,
     title: title,
     author: author,
     rating: rating,
+    userId: userId,
     reviewSummary: reviewSummary
   });
   review
@@ -50,7 +54,7 @@ async function updateReview(req, res, next){
   const author = req.body.author;
   const rating = req.body.rating
   const reviewSummary = req.body.reviewSummary
-
+  const userId = req.body.userId
 
   const review = await Review.findById(reviewId);
     
@@ -61,6 +65,7 @@ async function updateReview(req, res, next){
       review.title = title;
       review.author = author;
       review.rating = rating;
+      review.userId = userId,
       review.reviewSummary = reviewSummary;
       
       review.save();
@@ -92,11 +97,9 @@ async function getReview(req, res, next) {
 //Delete a single review
 async function deleteReview(req, res, next) {
   const reviewId = req.params.id;
-  let loggedInUserID = req.user.userId;
-  // console.log('loggedInUser', loggedInUserID);
   try {
     const review = await Review.findByIdAndDelete(reviewId);
-    if (!review && review.userId === loggedInUserID) {
+    if (!review) {
       return res.status(404).json({ message: 'Could not find and delete review.'});
     }
     return res.status(200).json({ message: 'Deleted review', review: review});
