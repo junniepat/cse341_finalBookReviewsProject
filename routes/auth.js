@@ -21,6 +21,7 @@ router.post('/signup',
    authController.signup)
 
    router.put('/updatepassword',
+   protected,
     [
     body('updatedPassword')
       .trim()
