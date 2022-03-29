@@ -11,13 +11,13 @@ async function createReview(req, res, next){
   if (!errors.isEmpty()) {
     return res.status(404).json({message: 'input is not valid'});
   }
-  const userName = req.body.userName;
+  const username = req.body.username;
   const title = req.body.title;
   const author = req.body.author;
   const rating = req.body.rating
   const reviewSummary = req.body.reviewSummary
   const review = new Review({
-    userName: userName,
+    username: username,
     title: title,
     author: author,
     rating: rating,
@@ -111,7 +111,7 @@ module.exports = {getReviews, getReview, deleteReview, updateReview, createRevie
 //Create review
 // async function createReview(req, res, next) {
 //   const review = new Review({
-//     userName: 'Darcee',
+//     username: 'Darcee',
 //     title: 'Treasure Island',
 //     author: 'Robert Louis Stevenson',
 //     rating: 1,
