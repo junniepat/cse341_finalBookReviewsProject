@@ -78,7 +78,6 @@ exports.login = (req, res, next) => {
 };
 
 
-
 exports.updatePassword = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -114,4 +113,3 @@ exports.updatePassword = (req, res, next) => {
       }
       next(err);
     });
-};
