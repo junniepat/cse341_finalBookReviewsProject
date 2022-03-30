@@ -1,10 +1,10 @@
 const express = require('express');
 const authController = require('../controllers/auth');
-const {protected} = require('../middleware');
-const { body } = require('express-validator');
 
 const router = express.Router();
 
+const {protected} = require('../middleware');
+const { body } = require('express-validator');
 
 router.post('/login', authController.login)
 

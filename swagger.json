@@ -10,6 +10,14 @@
   "schemes": [
     "http"
   ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "scheme": "bearer",
+      "in": "header"
+    }
+  },
   "paths": {
     "/login": {
       "post": {
@@ -77,6 +85,36 @@
         }
       }
     },
+    "/updatepassword": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "updatedPassword": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/post": {
       "post": {
         "description": "",
@@ -87,7 +125,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userName": {
+                "username": {
                   "example": "any"
                 },
                 "title": {
@@ -100,6 +138,9 @@
                   "example": "any"
                 },
                 "reviewSummary": {
+                  "example": "any"
+                },
+                "userId": {
                   "example": "any"
                 }
               }
@@ -142,6 +183,9 @@
                   "example": "any"
                 },
                 "reviewSummary": {
+                  "example": "any"
+                },
+                "userId": {
                   "example": "any"
                 }
               }
@@ -219,5 +263,10 @@
   "license": {
     "name": "Apache 2.0",
     "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-  }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }
