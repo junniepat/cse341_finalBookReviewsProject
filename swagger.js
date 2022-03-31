@@ -10,7 +10,6 @@ const doc = {
         name: 'Apache 2.0',
         url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
     },
-    host: 'localhost:8080',
     securityDefinitions: {
         bearerAuth: {
             type: 'apiKey',
@@ -20,7 +19,6 @@ const doc = {
         }
     },
     security: [ { bearerAuth: [] } ],
-    schemes: ['http']
 };
 
 const outputFile = './swagger.json';

@@ -25,6 +25,9 @@ var options = {
     customCss: '.swagger-ui .topbar { display: none }'
   };
 
+// configure swagger
+swaggerDocument.host = process.env.SWAGGER_HOST || 'localhost:8080'
+swaggerDocument.schemes = [process.env.SWAGGER_SCHEME || 'http']
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
 // prevents CORS error
@@ -76,7 +79,7 @@ connect to database
 
 mongoose.connect(MONGODB_URI)
 .then(result => {
-    app.listen(8080);
+    app.listen(process.env.PORT || 8080);
 })
 .catch(err => {
     console.log(err);

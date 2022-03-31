@@ -88,7 +88,7 @@ exports.updatePassword = (req, res, next) => {
   const updatedPassword = req.body.updatedPassword;
   bcrypt
     .hash(updatedPassword, 12)
-    .then(hashedPw => { 
+    .then(hashedPw => {
 
       if (loggedInUserEmail === email) {
       User.findOne({ email: email })
@@ -103,13 +103,14 @@ exports.updatePassword = (req, res, next) => {
     })
     .then(result => {
       res.status(200).json({ message: 'Password updated!' });
-    }) } else 
+    }) } else
       {return res.status(404).json({ message: 'Could not update password.'});
         }})
-    
+
     .catch(err => {
       if (!err.statusCode) {
         err.statusCode = 500;
       }
       next(err);
     });
+}
